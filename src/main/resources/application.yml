@@ -1,6 +1,11 @@
 micronaut:
   application:
     name: transaction-engine-api
+  server:
+    netty:
+      access-logger:
+        enabled: true
+        format: combined
 datasources:
   default:
     driver-class-name: org.postgresql.Driver
@@ -12,6 +17,7 @@ jpa:
   default:
     properties:
       hibernate:
+        show_sql: true
         hbm2ddl:
           auto: none
         connection:
