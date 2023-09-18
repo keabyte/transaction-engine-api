@@ -1,0 +1,25 @@
+micronaut:
+  application:
+    name: transaction-engine-api
+datasources:
+  default:
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    url: jdbc:postgresql://localhost:5432/transaction-engine-api
+    username: postgres
+    password: postgres
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+        connection:
+          url: ${datasources.default.url}
+          username: ${datasources.default.username}
+          password: ${datasources.default.password}
+    reactive: true
+liquibase:
+  datasources:
+    default:
+      change-log: classpath:db/liquibase-changelog.xml

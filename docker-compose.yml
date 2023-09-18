@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:16.0
+    container_name: transaction-engine-api-db
+    environment:
+      LANG: en_US.utf8
+      POSTGRES_DB: transaction-engine-api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+      PGPORT: 5432
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -U postgres
