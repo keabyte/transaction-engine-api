@@ -2,6 +2,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.8.22"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.8.22"
+    id("org.jetbrains.kotlin.kapt") version "1.8.22"
     id("com.google.devtools.ksp") version "1.8.22-1.0.11"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "4.0.3"
@@ -19,6 +20,10 @@ repositories {
 dependencies {
     ksp("io.micronaut.data:micronaut-data-processor")
     ksp("io.micronaut.serde:micronaut-serde-processor")
+
+    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
     implementation("com.ongres.scram:client:2.1")
     implementation("io.micronaut.data:micronaut-data-hibernate-reactive")
     implementation("io.micronaut.reactor:micronaut-reactor")
@@ -48,12 +53,12 @@ java {
 tasks {
     compileKotlin {
         compilerOptions {
-           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
         }
     }
     compileTestKotlin {
         compilerOptions {
-           jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
         }
     }
 }
@@ -69,8 +74,8 @@ micronaut {
         additionalModules.add("hibernate-reactive-postgresql")
     }
     aot {
-    // Please review carefully the optimizations enabled below
-    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true
