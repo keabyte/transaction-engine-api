@@ -19,23 +19,19 @@ datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    url: jdbc:postgresql://localhost:5432/transaction-engine-api
-    username: postgres
-    password: postgres
 
 jpa:
   default:
     properties:
       hibernate:
-        show_sql: true
         hbm2ddl:
-          auto: create-drop
+          auto: none
         connection:
           url: ${datasources.default.url}
           username: ${datasources.default.username}
           password: ${datasources.default.password}
     reactive: true
-    
+
 liquibase:
   datasources:
     default:
