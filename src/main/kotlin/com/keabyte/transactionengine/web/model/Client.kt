@@ -1,10 +1,11 @@
 package com.keabyte.transactionengine.web.model
 
-import io.micronaut.core.annotation.Introspected
 import io.micronaut.serde.annotation.Serdeable
+import java.util.*
 
-@Introspected
 @Serdeable
 class Client(
-    val id: Long
+    val id: UUID,
+    val firstName: String,
+    val lastName: String
 )

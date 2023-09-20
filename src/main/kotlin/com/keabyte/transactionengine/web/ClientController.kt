@@ -4,11 +4,9 @@ import com.keabyte.transactionengine.service.ClientService
 import com.keabyte.transactionengine.web.model.Client
 import com.keabyte.transactionengine.web.model.CreateClientRequest
 import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Produces
+import io.micronaut.http.annotation.*
 import reactor.core.publisher.Mono
+import java.util.*
 
 @Controller("/clients")
 @Produces(MediaType.APPLICATION_JSON)
@@ -17,12 +15,12 @@ class ClientController(
 ) {
 
     @Get("/{id}")
-    fun getClientById(id: Long): Mono<Client> {
-        return clientService.getClientById(id);
+    fun getClientById(id: UUID): Mono<Client> {
+        return clientService.getClientById(id)
     }
 
     @Post
-    fun createClient(): Mono<Client> {
-        return clientService.createClient(CreateClientRequest())
+    fun createClient(@Body createClientRequest: CreateClientRequest): Mono<Client> {
+        return clientService.createClient(createClientRequest)
     }
 }
