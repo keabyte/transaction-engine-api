@@ -1,11 +1,10 @@
 package com.keabyte.transaction_engine_api.service
 
-import com.keabyte.transaction_engine_api.repository.entity.ClientEntity
 import com.keabyte.transaction_engine_api.repository.ClientRepository
+import com.keabyte.transaction_engine_api.repository.entity.ClientEntity
 import com.keabyte.transaction_engine_api.web.model.client.Client
 import com.keabyte.transaction_engine_api.web.model.client.CreateClientRequest
 import jakarta.inject.Singleton
-import java.util.*
 
 @Singleton
 class ClientService(
