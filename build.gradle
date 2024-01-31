@@ -1,17 +1,16 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.8.22"
-    id("org.jetbrains.kotlin.plugin.jpa") version "1.8.22"
-    id("org.jetbrains.kotlin.kapt") version "1.8.22"
-    id("com.google.devtools.ksp") version "1.8.22-1.0.11"
+    id("org.jetbrains.kotlin.jvm") version "1.9.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.21"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.9.21"
+    id("com.google.devtools.ksp") version "1.9.21-1.0.16"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.0.3"
-    id("io.micronaut.test-resources") version "4.0.3"
-    id("io.micronaut.aot") version "4.0.3"
+    id("io.micronaut.application") version "4.2.1"
+    id("io.micronaut.test-resources") version "4.2.1"
+    id("io.micronaut.aot") version "4.2.1"
 }
 
 version = "0.1"
-group = "com.keabyte.transactionengine"
+group = "com.keabyte.transaction_engine_api.entity"
 
 repositories {
     mavenCentral()
@@ -19,66 +18,46 @@ repositories {
 
 dependencies {
     ksp("io.micronaut.data:micronaut-data-processor")
+    ksp("io.micronaut:micronaut-http-validation")
+    ksp("io.micronaut.openapi:micronaut-openapi")
     ksp("io.micronaut.serde:micronaut-serde-processor")
-    kapt("io.micronaut.openapi:micronaut-openapi")
-    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
-
-    implementation("org.mapstruct:mapstruct:1.5.5.Final")
-    implementation("com.ongres.scram:client:2.1")
-    implementation("io.micronaut.data:micronaut-data-hibernate-reactive")
-    implementation("io.micronaut.reactor:micronaut-reactor")
-    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.liquibase:micronaut-liquibase")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
-    implementation("io.micronaut.sql:micronaut-vertx-pg-client")
-    implementation("io.vertx:vertx-pg-client")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-    implementation("io.swagger.core.v3:swagger-annotations")
-
+    compileOnly("io.micronaut:micronaut-http-client")
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.yaml:snakeyaml")
-
     testImplementation("io.micronaut:micronaut-http-client")
 }
 
 
 application {
-    mainClass.set("com.keabyte.transactionengine.ApplicationKt")
+    mainClass.set("com.keabyte.transaction_engine_api.entity.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
 }
 
-tasks {
-    compileKotlin {
-        compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-        }
-    }
-    compileTestKotlin {
-        compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-        }
-    }
-}
+
 graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.keabyte.transactionengine.*")
-    }
-    testResources {
-        additionalModules.add("hibernate-reactive-postgresql")
+        annotations("com.keabyte.transaction_engine_api.entity.*")
     }
     aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
+    // Please review carefully the optimizations enabled below
+    // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true

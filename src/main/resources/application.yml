@@ -1,11 +1,6 @@
 micronaut:
   application:
     name: transaction-engine-api
-  server:
-    netty:
-      access-logger:
-        enabled: true
-        format: combined
   router:
     static-resources:
       swagger:
@@ -14,24 +9,15 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
-
 datasources:
   default:
     driver-class-name: org.postgresql.Driver
-    db-type: postgres
-
 jpa:
   default:
     properties:
       hibernate:
         hbm2ddl:
           auto: none
-        connection:
-          url: ${datasources.default.url}
-          username: ${datasources.default.username}
-          password: ${datasources.default.password}
-    reactive: true
-
 liquibase:
   datasources:
     default:

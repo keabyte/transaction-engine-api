@@ -13,7 +13,7 @@
         </preConditions>
 
         <createTable tableName="client">
-            <column name="id" type="uuid">
+            <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
         </createTable>

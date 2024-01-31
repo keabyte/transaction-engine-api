@@ -1,6 +1,6 @@
 applicationType: default
-defaultPackage: com.keabyte.transactionengine
+defaultPackage: com.keabyte.transaction_engine_api.entity
 testFramework: junit
 sourceLanguage: kotlin
 buildTool: gradle
-features: [app-name, data, data-hibernate-reactive, gradle, http-client-test, jdbc-hikari, junit, kotlin, kotlin-application, ksp, liquibase, logback, micronaut-aot, micronaut-build, netty-server, postgres, readme, serialization-jackson, shade, test-resources, vertx-pg-client, yaml, yaml-build]
+features: [annotation-api, app-name, data, data-jpa, gradle, http-client-test, jdbc-hikari, junit, kotlin, kotlin-application, ksp, liquibase, logback, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, openapi, postgres, readme, serialization-jackson, shade, swagger-ui, test-resources, yaml, yaml-build]
