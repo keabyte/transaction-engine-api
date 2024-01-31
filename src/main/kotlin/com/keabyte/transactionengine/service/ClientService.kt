@@ -2,8 +2,8 @@ package com.keabyte.transactionengine.service
 
 import com.keabyte.transactionengine.mapper.ClientMapper
 import com.keabyte.transactionengine.repository.ClientRepository
-import com.keabyte.transactionengine.web.model.Client
-import com.keabyte.transactionengine.web.model.CreateClientRequest
+import com.keabyte.transactionengine.web.model.client.Client
+import com.keabyte.transactionengine.web.model.client.CreateClientRequest
 import jakarta.inject.Singleton
 import reactor.core.publisher.Mono
 import java.util.*

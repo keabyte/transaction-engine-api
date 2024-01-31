@@ -1,4 +1,4 @@
-package com.keabyte.transactionengine.web.model
+package com.keabyte.transactionengine.web.model.client
 
 import io.micronaut.serde.annotation.Serdeable
 import java.util.*

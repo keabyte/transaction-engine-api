@@ -1,8 +1,8 @@
 package com.keabyte.transactionengine.mapper
 
 import com.keabyte.transactionengine.entity.ClientEntity
-import com.keabyte.transactionengine.web.model.Client
-import com.keabyte.transactionengine.web.model.CreateClientRequest
+import com.keabyte.transactionengine.web.model.client.Client
+import com.keabyte.transactionengine.web.model.client.CreateClientRequest
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 
