@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="create-client-table.1" author="taylar.keast">
+    <changeSet id="client-table.create.1" author="taylar-keast">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="client"/>
