@@ -1,13 +1,9 @@
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/transaction-engine-api
-    username: postgres
-    password: postgres
+    dialect: POSTGRES
 
 jpa:
   default:
     properties:
       hibernate:
         show_sql: true
-        hbm2ddl:
-          auto: create-drop

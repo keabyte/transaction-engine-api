@@ -6,4 +6,7 @@ import io.micronaut.data.repository.CrudRepository
 import java.util.*
 
 @Repository
-interface ClientRepository : CrudRepository<ClientEntity, Long>
+interface ClientRepository : CrudRepository<ClientEntity, Long> {
+
+    fun findByClientNumber(clientNumber: String): Optional<ClientEntity>
+}

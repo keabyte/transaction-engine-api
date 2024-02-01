@@ -11,8 +11,8 @@ class ClientService(
     private val clientRepository: ClientRepository,
 ) {
 
-    fun getClientById(clientId: Long): Client {
-        return clientRepository.findById(clientId).map(ClientEntity::toModel).orElseThrow()
+    fun getClientByExternalId(clientId: String): Client {
+        return clientRepository.findByClientNumber(clientId).map(ClientEntity::toModel).orElseThrow()
     }
 
     fun createClient(request: CreateClientRequest): Client {

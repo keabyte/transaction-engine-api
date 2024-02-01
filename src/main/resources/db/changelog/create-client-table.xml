@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="client-table.create.1" author="taylar-keast">
+    <changeSet id="client-table.create.3" author="taylar-keast">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="client"/>
@@ -16,6 +16,10 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
+            <column name="client_number" type="varchar(255)"/>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="date_of_birth" type="date"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

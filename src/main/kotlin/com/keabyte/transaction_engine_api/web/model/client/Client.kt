@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 @Serdeable
 class Client(
-    val id: Long,
+    val clientNumber: String,
     val firstName: String,
     val lastName: String,
     val dateOfBirth: LocalDate
