@@ -16,19 +16,13 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="account_transaction_id" type="int"/>
+            <column name="account_transaction_id" type="int">
+                <constraints referencedColumnNames="id"
+                             referencedTableName="account_transaction" foreignKeyName="fk_account_transaction_id"/>
+            </column>
             <column name="amount" type="decimal"/>
             <column name="currency" type="varchar(255)"/>
             <column name="balance_effect_type" type="varchar(255)"/>
         </createTable>
-    </changeSet>
-
-    <changeSet id="investment_transaction.fk_account_transaction_id.1" author="taylar-keast">
-        <addForeignKeyConstraint baseColumnNames="account_transaction_id"
-                                 baseTableName="investment_transaction"
-                                 constraintName="fk_account_transaction_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="account_transaction"
-        />
     </changeSet>
 </databaseChangeLog>

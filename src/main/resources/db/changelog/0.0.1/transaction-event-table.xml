@@ -16,15 +16,11 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="transaction_reference" type="varchar(255)"/>
+            <column name="transaction_reference" type="varchar(255)">
+                <constraints unique="true" uniqueConstraintName="uk_transaction_reference"/>
+            </column>
             <column name="date_created" type="timestamptz" defaultValueComputed="current_timestamp"/>
             <column name="type" type="varchar(255)"/>
         </createTable>
-    </changeSet>
-
-    <changeSet id="transaction_event.uk_transaction_reference.1" author="taylar-keast">
-        <createIndex indexName="uk_transaction_reference" tableName="transaction_event" unique="true">
-            <column name="transaction_reference"/>
-        </createIndex>
     </changeSet>
 </databaseChangeLog>
