@@ -18,7 +18,7 @@
             </column>
             <column name="transaction_reference" type="varchar(255)"/>
             <column name="date_created" type="timestamptz" defaultValueComputed="current_timestamp"/>
-            <column name="transaction_type" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
         </createTable>
     </changeSet>
 

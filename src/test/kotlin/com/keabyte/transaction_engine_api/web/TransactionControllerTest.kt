@@ -1,6 +1,7 @@
 package com.keabyte.transaction_engine_api.web
 
 import com.keabyte.transaction_engine_api.fixture.ClientFixture
+import com.keabyte.transaction_engine_api.repository.enum.BalanceEffectType
 import com.keabyte.transaction_engine_api.repository.enum.TransactionType
 import com.keabyte.transaction_engine_api.web.model.account.CreateAccountRequest
 import com.keabyte.transaction_engine_api.web.model.transaction.CreateDepositRequest
@@ -31,7 +32,7 @@ class TransactionControllerTest(
         assertThat(transaction)
             .hasNoNullFieldsOrProperties()
 
-        assertThat(transaction.transactionType).isEqualTo(TransactionType.DEPOSIT)
+        assertThat(transaction.type).isEqualTo(TransactionType.DEPOSIT)
 
         assertThat(transaction.accountTransactions)
             .hasSize(1)
@@ -43,5 +44,6 @@ class TransactionControllerTest(
         val investmentTransaction = accountTransaction.invesmentTransactions[0]
         assertThat(investmentTransaction.amount).isEqualTo("100.33")
         assertThat(investmentTransaction.currency).isEqualTo("AUD")
+        assertThat(investmentTransaction.balanceEffectType).isEqualTo(BalanceEffectType.CREDIT)
     }
 }

@@ -4,6 +4,7 @@ import com.keabyte.transaction_engine_api.repository.TransactionEventRepository
 import com.keabyte.transaction_engine_api.repository.entity.transaction.AccountTransactionEntity
 import com.keabyte.transaction_engine_api.repository.entity.transaction.InvestmentTransactionEntity
 import com.keabyte.transaction_engine_api.repository.entity.transaction.TransactionEventEntity
+import com.keabyte.transaction_engine_api.repository.enum.BalanceEffectType
 import com.keabyte.transaction_engine_api.repository.enum.TransactionType
 import com.keabyte.transaction_engine_api.service.AccountService
 import com.keabyte.transaction_engine_api.web.model.transaction.CreateDepositRequest
@@ -17,7 +18,7 @@ class TransactionService(
 
     fun createTransaction(params: CreateTransactionParameters): TransactionEventEntity {
         val transaction = TransactionEventEntity(
-            transactionType = params.transactionType
+            type = params.transactionType
         )
 
         val accountNumbers = params.investments.map { it.accountNumber }.toSet()
@@ -35,6 +36,7 @@ class TransactionService(
                     accountTransaction = accountTransaction,
                     amount = investment.amount,
                     currency = investment.currency,
+                    balanceEffectType = investment.balanceEffectType
                 )
                 accountTransaction.investmentTransactions.add(investmentTransaction)
             }
@@ -51,7 +53,10 @@ class TransactionService(
                     transactionType = TransactionType.DEPOSIT,
                     investments = listOf(
                         CreateInvestmentParameters(
-                            request.accountNumber, request.amount, request.currency
+                            accountNumber = request.accountNumber,
+                            amount = request.amount,
+                            currency = request.currency,
+                            balanceEffectType = BalanceEffectType.CREDIT
                         )
                     )
                 )

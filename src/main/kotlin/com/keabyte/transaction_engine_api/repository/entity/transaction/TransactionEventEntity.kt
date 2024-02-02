@@ -15,7 +15,7 @@ data class TransactionEventEntity(
     @CreationTimestamp(source = SourceType.DB)
     val dateCreated: OffsetDateTime? = null,
     @Enumerated(EnumType.STRING)
-    val transactionType: TransactionType,
+    val type: TransactionType,
     @OneToMany(mappedBy = "transactionEvent")
     var accountTransactions: MutableList<AccountTransactionEntity> = ArrayList()
 ) {
@@ -23,7 +23,7 @@ data class TransactionEventEntity(
     fun toModel() = TransactionEvent(
         transactionReference = transactionReference,
         dateCreated = dateCreated!!,
-        transactionType = transactionType,
+        type = type,
         accountTransactions = accountTransactions.map { it.toModel() }
     )
 }

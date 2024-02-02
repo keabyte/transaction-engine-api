@@ -8,6 +8,6 @@ import java.time.OffsetDateTime
 data class TransactionEvent(
     val transactionReference: String,
     val dateCreated: OffsetDateTime,
-    val transactionType: TransactionType,
+    val type: TransactionType,
     val accountTransactions: List<AccountTransaction>
 )
