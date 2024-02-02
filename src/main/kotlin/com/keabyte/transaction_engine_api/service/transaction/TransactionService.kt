@@ -15,26 +15,47 @@ class TransactionService(
     private val accountService: AccountService
 ) {
 
-    fun createDeposit(request: CreateDepositRequest): TransactionEventEntity {
-        val account = accountService.getAccountById(request.accountNumber)
+    fun createTransaction(params: CreateTransactionParameters): TransactionEventEntity {
+        val transaction = TransactionEventEntity(
+            transactionType = params.transactionType
+        )
 
-        val transactionEvent = TransactionEventEntity(
-            transactionType = TransactionType.DEPOSIT
-        )
-        val accountTransaction = AccountTransactionEntity(
-            transactionEvent = transactionEvent,
-            account = account
-        )
-        val investmentTransaction =
-            InvestmentTransactionEntity(
-                accountTransaction = accountTransaction,
-                amount = request.amount,
-                currency = request.currency
+        val accountNumbers = params.investments.map { it.accountNumber }.toSet()
+
+        for (accountNumber in accountNumbers) {
+            val account = accountService.getAccountById(accountNumber)
+            val accountTransaction = AccountTransactionEntity(
+                transactionEvent = transaction,
+                account = account
             )
+            transaction.accountTransactions.add(accountTransaction)
 
-        transactionEvent.accountTransactions.add(accountTransaction)
-        accountTransaction.investmentTransactions.add(investmentTransaction)
+            for (investment in params.investments.filter { it.accountNumber.equals(accountNumber) }) {
+                val investmentTransaction = InvestmentTransactionEntity(
+                    accountTransaction = accountTransaction,
+                    amount = investment.amount,
+                    currency = investment.currency,
+                )
+                accountTransaction.investmentTransactions.add(investmentTransaction)
+            }
+        }
 
-        return transactionEventRepository.save(transactionEvent)
+
+        return transaction
+    }
+
+    fun createDeposit(request: CreateDepositRequest): TransactionEventEntity {
+        return transactionEventRepository.save(
+            createTransaction(
+                CreateTransactionParameters(
+                    transactionType = TransactionType.DEPOSIT,
+                    investments = listOf(
+                        CreateInvestmentParameters(
+                            request.accountNumber, request.amount, request.currency
+                        )
+                    )
+                )
+            )
+        )
     }
 }
