@@ -5,7 +5,7 @@ import io.micronaut.serde.annotation.Serdeable
 import java.time.LocalDate
 
 @Serdeable
-class CreateClientRequest(
+data class CreateClientRequest(
     val firstName: String,
     val lastName: String,
     val dateOfBirth: LocalDate

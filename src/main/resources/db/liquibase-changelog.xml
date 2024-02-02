@@ -7,4 +7,9 @@
 
     <include file="db/changelog/0.0.1/create-client-table.xml"/>
     <include file="db/changelog/0.0.1/create-account-table.xml"/>
+
+    <include file="db/changelog/0.0.1/create-transaction-event-table.xml"/>
+    <include file="db/changelog/0.0.1/create-account-transaction-table.xml"/>
+    <include file="db/changelog/0.0.1/create-investment-transaction-table.xml"/>
+
 </databaseChangeLog>

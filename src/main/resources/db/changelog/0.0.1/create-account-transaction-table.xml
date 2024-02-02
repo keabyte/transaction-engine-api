@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="account_transaction.1" author="taylar-keast">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="account_transaction"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="account_transaction">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="transaction_event_id" type="int"/>
+            <column name="account_id" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="account_transaction.fk_transaction_event_id.1" author="taylar-keast">
+        <addForeignKeyConstraint baseColumnNames="transaction_event_id"
+                                 baseTableName="account_transaction"
+                                 constraintName="fk_transaction_event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transaction_event"
+        />
+    </changeSet>
+
+    <changeSet id="account_transaction.fk_account_id.1" author="taylar-keast">
+        <addForeignKeyConstraint baseColumnNames="account_id"
+                                 baseTableName="account_transaction"
+                                 constraintName="fk_account_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transaction_event"
+        />
+    </changeSet>
+</databaseChangeLog>

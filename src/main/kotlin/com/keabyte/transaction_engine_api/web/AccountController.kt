@@ -15,11 +15,11 @@ class AccountController(private val accountService: AccountService) {
 
     @Get("/{accountNumber}")
     fun getAccountById(accountNumber: String): Account {
-        return accountService.getAccountById(accountNumber)
+        return accountService.getAccountById(accountNumber).toModel()
     }
 
     @Post
     fun createAccount(request: CreateAccountRequest): Account {
-        return accountService.createAccount(request)
+        return accountService.createAccount(request).toModel()
     }
 }
