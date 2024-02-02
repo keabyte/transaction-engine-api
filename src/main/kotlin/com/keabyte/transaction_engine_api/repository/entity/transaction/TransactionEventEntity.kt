@@ -16,7 +16,7 @@ data class TransactionEventEntity(
     val dateCreated: OffsetDateTime? = null,
     @Enumerated(EnumType.STRING)
     val type: TransactionType,
-    @OneToMany(mappedBy = "transactionEvent")
+    @OneToMany(mappedBy = "transactionEvent", cascade = [CascadeType.ALL])
     var accountTransactions: MutableList<AccountTransactionEntity> = ArrayList()
 ) {
 

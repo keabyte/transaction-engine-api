@@ -35,7 +35,7 @@
                                  baseTableName="account_transaction"
                                  constraintName="fk_account_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="transaction_event"
+                                 referencedTableName="account"
         />
     </changeSet>
 </databaseChangeLog>

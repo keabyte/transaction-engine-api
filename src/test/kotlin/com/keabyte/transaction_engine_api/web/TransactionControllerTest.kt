@@ -52,10 +52,18 @@ class TransactionControllerTest(
     fun `create withdrawal`() {
         val client = clientController.createClient(ClientFixture.createClientRequest_jane())
         val account = accountController.createAccount(CreateAccountRequest(clientNumber = client.clientNumber))
+        transactionController.createDeposit(
+            CreateDepositRequest(
+                accountNumber = account.accountNumber,
+                amount = BigDecimal("100.00"),
+                currency = "AUD"
+            )
+        )
+
         val transaction = transactionController.createWithdrawal(
             CreateWithdrawalRequest(
                 accountNumber = account.accountNumber,
-                amount = BigDecimal("10.00"),
+                amount = BigDecimal("9.00"),
                 currency = "AUD"
             )
         )
@@ -70,7 +78,7 @@ class TransactionControllerTest(
         assertThat(accountTransaction.invesmentTransactions)
             .hasSize(1)
         val investmentTransaction = accountTransaction.invesmentTransactions[0]
-        assertThat(investmentTransaction.amount).isEqualTo("10.00")
+        assertThat(investmentTransaction.amount).isEqualTo("9.00")
         assertThat(investmentTransaction.currency).isEqualTo("AUD")
         assertThat(investmentTransaction.balanceEffectType).isEqualTo(BalanceEffectType.DEBIT)
     }

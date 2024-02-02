@@ -8,7 +8,10 @@ import com.keabyte.transaction_engine_api.web.model.account.CreateAccountRequest
 import jakarta.inject.Singleton
 
 @Singleton
-class AccountService(private val accountRepository: AccountRepository, private val accountMapper: AccountMapper) {
+class AccountService(
+    private val accountRepository: AccountRepository,
+    private val accountMapper: AccountMapper,
+) {
 
     fun createAccount(request: CreateAccountRequest): AccountEntity {
         val accountEntity = accountMapper.mapCreateAccountRequestToAccountEntity(request)

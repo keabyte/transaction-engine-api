@@ -1,20 +1,24 @@
 package com.keabyte.transaction_engine_api.service.transaction
 
+import com.keabyte.transaction_engine_api.exception.BusinessException
 import com.keabyte.transaction_engine_api.repository.TransactionEventRepository
 import com.keabyte.transaction_engine_api.repository.entity.transaction.AccountTransactionEntity
 import com.keabyte.transaction_engine_api.repository.entity.transaction.InvestmentTransactionEntity
 import com.keabyte.transaction_engine_api.repository.entity.transaction.TransactionEventEntity
 import com.keabyte.transaction_engine_api.repository.enum.BalanceEffectType
 import com.keabyte.transaction_engine_api.repository.enum.TransactionType
+import com.keabyte.transaction_engine_api.service.AccountBalanceService
 import com.keabyte.transaction_engine_api.service.AccountService
 import com.keabyte.transaction_engine_api.web.model.transaction.CreateDepositRequest
 import com.keabyte.transaction_engine_api.web.model.transaction.CreateWithdrawalRequest
 import jakarta.inject.Singleton
+import java.math.BigDecimal
 
 @Singleton
 class TransactionService(
     private val transactionEventRepository: TransactionEventRepository,
-    private val accountService: AccountService
+    private val accountService: AccountService,
+    private val accountBalanceService: AccountBalanceService
 ) {
 
     fun createTransaction(params: CreateTransactionParameters): TransactionEventEntity {
@@ -66,6 +70,12 @@ class TransactionService(
     }
 
     fun createWithdrawal(request: CreateWithdrawalRequest): TransactionEventEntity {
+        val accountBalance = accountBalanceService.getAccountBalance(request.accountNumber)
+        val newBalance = accountBalance - request.amount
+        if (newBalance < BigDecimal.ZERO) {
+            throw BusinessException("Failed to create withdrawal for account number ${request.accountNumber}. The request amount of ${request.amount} would leave the account in negative balance (new balance $newBalance).")
+        }
+
         return transactionEventRepository.save(
             createTransaction(
                 CreateTransactionParameters(

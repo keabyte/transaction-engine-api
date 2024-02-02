@@ -19,7 +19,7 @@
             <column name="account_transaction_id" type="int"/>
             <column name="amount" type="decimal"/>
             <column name="currency" type="varchar(255)"/>
-            <column name="balance_effect_type" type="int"/>
+            <column name="balance_effect_type" type="varchar(255)"/>
         </createTable>
     </changeSet>
 

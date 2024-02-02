@@ -13,7 +13,7 @@ data class AccountTransactionEntity(
     @ManyToOne
     @JoinColumn(name = "account_id")
     val account: AccountEntity,
-    @OneToMany(mappedBy = "accountTransaction")
+    @OneToMany(mappedBy = "accountTransaction", cascade = [CascadeType.ALL])
     var investmentTransactions: MutableList<InvestmentTransactionEntity> = ArrayList()
 ) {
 
