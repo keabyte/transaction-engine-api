@@ -19,6 +19,7 @@ data class AccountEntity(
 ) {
 
     fun toModel(): Account = Account(
+        accountNumber = accountNumber,
         clientNumber = client.clientNumber,
         dateCreated = dateCreated!!
     )
