@@ -8,6 +8,7 @@ import com.keabyte.transaction_engine_api.repository.enum.BalanceEffectType
 import com.keabyte.transaction_engine_api.repository.enum.TransactionType
 import com.keabyte.transaction_engine_api.service.AccountService
 import com.keabyte.transaction_engine_api.web.model.transaction.CreateDepositRequest
+import com.keabyte.transaction_engine_api.web.model.transaction.CreateWithdrawalRequest
 import jakarta.inject.Singleton
 
 @Singleton
@@ -57,6 +58,24 @@ class TransactionService(
                             amount = request.amount,
                             currency = request.currency,
                             balanceEffectType = BalanceEffectType.CREDIT
+                        )
+                    )
+                )
+            )
+        )
+    }
+
+    fun createWithdrawal(request: CreateWithdrawalRequest): TransactionEventEntity {
+        return transactionEventRepository.save(
+            createTransaction(
+                CreateTransactionParameters(
+                    transactionType = TransactionType.WITHDRAWAL,
+                    investments = listOf(
+                        CreateInvestmentParameters(
+                            accountNumber = request.accountNumber,
+                            amount = request.amount,
+                            currency = request.currency,
+                            balanceEffectType = BalanceEffectType.DEBIT
                         )
                     )
                 )
