@@ -5,13 +5,14 @@ import com.keabyte.transaction_engine_api.repository.ClientRepository
 import com.keabyte.transaction_engine_api.web.model.client.Client
 import com.keabyte.transaction_engine_api.web.model.client.CreateClientRequest
 import jakarta.inject.Singleton
+import jakarta.validation.constraints.NotBlank
 
 @Singleton
-class ClientService(
+open class ClientService(
     private val clientRepository: ClientRepository,
 ) {
 
-    fun getClientByExternalId(clientNumber: String): Client {
+    open fun getClientById(@NotBlank clientNumber: String): Client {
         return clientRepository.findByClientNumber(clientNumber).map { it.toModel() }
             .orElseThrow { BusinessException("No client exists with client number $clientNumber") }
     }

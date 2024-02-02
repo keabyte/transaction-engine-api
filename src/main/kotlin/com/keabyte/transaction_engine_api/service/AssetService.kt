@@ -8,9 +8,9 @@ import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotBlank
 
 @Singleton
-class AssetService(private val assetRepository: AssetRepository) {
+open class AssetService(private val assetRepository: AssetRepository) {
 
-    fun getAssetById(@NotBlank assetCode: String): AssetEntity {
+    open fun getAssetById(@NotBlank assetCode: String): AssetEntity {
         return assetRepository.findByAssetCode(assetCode)
             .orElseThrow { BusinessException("No asset exists for asset code $assetCode") }
     }

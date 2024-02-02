@@ -34,7 +34,7 @@ class AssetControllerTest(private val assetController: AssetController) {
             6
         )
         assetController.createAsset(request)
-        val asset = assetController.getAsset("SPY")
+        val asset = assetController.getAssetByCode("SPY")
 
         assertThat(asset)
             .usingRecursiveComparison()
@@ -43,11 +43,11 @@ class AssetControllerTest(private val assetController: AssetController) {
 
     @Test
     fun `get asset that does not exist`() {
-        assertThrows<BusinessException> { assetController.getAsset("SPY") }
+        assertThrows<BusinessException> { assetController.getAssetByCode("SPY") }
     }
 
     @Test
     fun `get asset with blank asset code`() {
-        assertThrows<ConstraintViolationException> { assetController.getAsset("") }
+        assertThrows<ConstraintViolationException> { assetController.getAssetByCode("") }
     }
 }

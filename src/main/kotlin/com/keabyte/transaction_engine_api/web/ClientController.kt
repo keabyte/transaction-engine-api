@@ -15,7 +15,7 @@ class ClientController(
 
     @Get("/{clientNumber}")
     fun getClientById(clientNumber: String): Client {
-        return clientService.getClientByExternalId(clientNumber)
+        return clientService.getClientById(clientNumber)
     }
 
     @Post

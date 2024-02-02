@@ -6,9 +6,10 @@ import com.keabyte.transaction_engine_api.repository.AccountRepository
 import com.keabyte.transaction_engine_api.repository.entity.AccountEntity
 import com.keabyte.transaction_engine_api.web.model.account.CreateAccountRequest
 import jakarta.inject.Singleton
+import jakarta.validation.constraints.NotBlank
 
 @Singleton
-class AccountService(
+open class AccountService(
     private val accountRepository: AccountRepository,
     private val accountMapper: AccountMapper,
 ) {
@@ -18,7 +19,7 @@ class AccountService(
         return accountRepository.save(accountEntity)
     }
 
-    fun getAccountById(accountNumber: String): AccountEntity {
+    open fun getAccountById(@NotBlank accountNumber: String): AccountEntity {
         return accountRepository.findByAccountNumber(accountNumber)
             .orElseThrow { BusinessException("No account exists with account number $accountNumber") }
     }

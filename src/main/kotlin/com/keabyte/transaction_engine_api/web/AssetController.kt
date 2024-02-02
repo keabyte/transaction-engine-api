@@ -11,7 +11,7 @@ import io.micronaut.http.annotation.Post
 class AssetController(private val assetService: AssetService) {
 
     @Get("/assetCode")
-    fun getAsset(assetCode: String): Asset {
+    fun getAssetByCode(assetCode: String): Asset {
         return assetService.getAssetById(assetCode).toModel()
     }
 

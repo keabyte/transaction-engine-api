@@ -1,10 +1,13 @@
 package com.keabyte.transaction_engine_api.web
 
+import com.keabyte.transaction_engine_api.exception.BusinessException
 import com.keabyte.transaction_engine_api.fixture.ClientFixture
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.validation.ConstraintViolationException
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 @MicronautTest
 class ClientControllerTest(private val clientController: ClientController) {
@@ -30,5 +33,15 @@ class ClientControllerTest(private val clientController: ClientController) {
         Assertions.assertThat(client2)
             .usingRecursiveComparison()
             .isEqualTo(client1)
+    }
+
+    @Test
+    fun `get client that does not exist`() {
+        assertThrows<BusinessException> { clientController.getClientById("-1") }
+    }
+
+    @Test
+    fun `get client with blank client number`() {
+        assertThrows<ConstraintViolationException> { clientController.getClientById("") }
     }
 }
