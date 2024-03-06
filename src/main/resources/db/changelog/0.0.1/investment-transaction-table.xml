@@ -20,6 +20,10 @@
                 <constraints referencedColumnNames="id"
                              referencedTableName="account_transaction" foreignKeyName="fk_account_transaction_id"/>
             </column>
+            <column name="units" type="decimal"/>
+            <column name="asset_id" type="int">
+                <constraints referencedColumnNames="id" referencedTableName="asset" foreignKeyName="fk_asset_id"/>
+            </column>
             <column name="amount" type="decimal"/>
             <column name="currency" type="varchar(255)"/>
             <column name="balance_effect_type" type="varchar(255)"/>
