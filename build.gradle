@@ -10,7 +10,7 @@ plugins {
 }
 
 version = "0.1"
-group = "com.keabyte.transaction_engine_api.entity"
+group = "com.keabyte.transaction_engine.client_api.entity"
 
 repositories {
     mavenCentral()
@@ -43,7 +43,7 @@ dependencies {
 
 
 application {
-    mainClass.set("com.keabyte.transaction_engine_api.entity.ApplicationKt")
+    mainClass.set("com.keabyte.transaction_engine.client_api.entity.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
@@ -56,7 +56,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.keabyte.transaction_engine_api.entity.*")
+        annotations("com.keabyte.transaction_engine.client_api.entity.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
