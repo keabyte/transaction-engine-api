@@ -2,8 +2,8 @@ version: '3'
 
 services:
   db:
-    image: postgres:16.0
-    container_name: transaction-engine-api-db
+    image: postgres:16.2
+    container_name: transaction-engine-db
     environment:
       LANG: en_US.utf8
       POSTGRES_DB: transaction-engine-api

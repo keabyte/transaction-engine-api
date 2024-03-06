@@ -46,7 +46,7 @@ application {
     mainClass.set("com.keabyte.transaction_engine.client_api.entity.ApplicationKt")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
 }
 
 
