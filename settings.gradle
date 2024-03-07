@@ -1,3 +1,2 @@
-
-rootProject.name="transaction-engine-api"
+rootProject.name = "txn-client-api"
 

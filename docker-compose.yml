@@ -3,10 +3,10 @@ version: '3'
 services:
   db:
     image: postgres:16.2
-    container_name: transaction-engine-db
+    container_name: txn-client-api-db
     environment:
       LANG: en_US.utf8
-      POSTGRES_DB: transaction-engine-api
+      POSTGRES_DB: txn-client-api
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data

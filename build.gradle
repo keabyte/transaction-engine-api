@@ -43,7 +43,7 @@ dependencies {
 
 
 application {
-    mainClass.set("com.keabyte.transaction_engine.client_api.entity.ApplicationKt")
+    mainClass.set("com.keabyte.transaction_engine.client_api.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("21")

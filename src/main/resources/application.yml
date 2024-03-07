@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: transaction-engine-api
+    name: txn-client-api
   router:
     static-resources:
       swagger:

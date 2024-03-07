@@ -5,22 +5,22 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="transaction_event.1" author="taylar-keast">
+    <changeSet id="client-table.create.1" author="taylar-keast">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="transaction_event"/>
+                <tableExists tableName="asset"/>
             </not>
         </preConditions>
 
-        <createTable tableName="transaction_event">
-            <column name="id" type="int" autoIncrement="true">
+        <createTable tableName="asset">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="transaction_reference" type="varchar(255)">
-                <constraints unique="true" uniqueConstraintName="uk_transaction_reference"/>
+            <column name="asset_code" type="varchar(255)">
+                <constraints unique="true" uniqueConstraintName="uk_asset_code"/>
             </column>
-            <column name="date_created" type="timestamptz" defaultValueComputed="current_timestamp"/>
-            <column name="type" type="varchar(255)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="unit_scale" type="int" remarks="Number of unit decimal places"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

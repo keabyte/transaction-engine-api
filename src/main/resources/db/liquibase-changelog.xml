@@ -5,13 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="db/changelog/0.0.1/client-table.xml"/>
-    <include file="db/changelog/0.0.1/account-table.xml"/>
-
-    <include file="db/changelog/0.0.1/transaction-event-table.xml"/>
-    <include file="db/changelog/0.0.1/account-transaction-table.xml"/>
-    <include file="db/changelog/0.0.1/investment-transaction-table.xml"/>
-    
-    <include file="db/changelog/0.0.1/asset-table.xml"/>
+    <include file="db/changelog/release/client-table.xml"/>
+    <include file="db/changelog/release/account-table.xml"/>
+    <include file="db/changelog/release/asset-table.xml"/>
 
 </databaseChangeLog>
