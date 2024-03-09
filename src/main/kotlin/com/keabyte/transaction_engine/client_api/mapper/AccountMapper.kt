@@ -7,11 +7,11 @@ import com.keabyte.transaction_engine.client_api.web.model.account.CreateAccount
 import jakarta.inject.Singleton
 
 @Singleton
-class AccountMapper(private val clientRepository: com.keabyte.transaction_engine.client_api.repository.ClientRepository) {
+class AccountMapper(private val clientRepository: ClientRepository) {
 
     fun mapCreateAccountRequestToAccountEntity(request: CreateAccountRequest) =
-        com.keabyte.transaction_engine.client_api.repository.entity.AccountEntity(
+        AccountEntity(
             client = clientRepository.findByClientNumber(request.clientNumber)
-                .orElseThrow { com.keabyte.transaction_engine.client_api.exception.BusinessException("No client exists with client number ${request.clientNumber}") }
+                .orElseThrow { BusinessException("No client exists with client number ${request.clientNumber}") }
         )
 }

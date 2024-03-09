@@ -15,7 +15,7 @@ data class AccountEntity(
     val dateCreated: OffsetDateTime? = null,
     @ManyToOne
     @JoinColumn(name = "client_id")
-    val client: com.keabyte.transaction_engine.client_api.repository.entity.ClientEntity
+    val client: ClientEntity
 ) {
 
     fun toModel(): Account = Account(
