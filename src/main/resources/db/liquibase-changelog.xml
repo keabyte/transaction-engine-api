@@ -7,6 +7,5 @@
 
     <include file="db/changelog/release/client-table.xml"/>
     <include file="db/changelog/release/account-table.xml"/>
-    <include file="db/changelog/release/asset-table.xml"/>
 
 </databaseChangeLog>

@@ -6,8 +6,8 @@ import com.keabyte.transaction_engine.client_api.web.model.account.CreateAccount
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.validation.ConstraintViolationException
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 @MicronautTest
 class AccountControllerTest(
@@ -37,15 +37,19 @@ class AccountControllerTest(
 
     @Test
     fun `get account that does not exist`() {
-        assertThrows<com.keabyte.transaction_engine.client_api.exception.BusinessException> {
-            accountController.getAccountById(
-                "-1"
-            )
+        assertThatThrownBy {
+            accountController.getAccountById("-1")
         }
+            .isInstanceOf(BusinessException::class.java)
+            .hasMessageContaining("No account exists")
     }
 
     @Test
     fun `get account with blank account number`() {
-        assertThrows<ConstraintViolationException> { accountController.getAccountById("") }
+        assertThatThrownBy {
+            accountController.getAccountById("")
+        }
+            .isInstanceOf(ConstraintViolationException::class.java)
+            .hasMessageContaining("must not be blank")
     }
 }

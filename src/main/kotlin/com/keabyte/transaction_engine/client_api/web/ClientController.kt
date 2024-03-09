@@ -9,6 +9,7 @@ import java.util.*
 
 @Controller("/clients")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 class ClientController(
     private val clientService: ClientService
 ) {
