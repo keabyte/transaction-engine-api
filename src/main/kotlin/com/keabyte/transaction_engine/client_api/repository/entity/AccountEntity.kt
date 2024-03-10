@@ -12,7 +12,7 @@ data class AccountEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
     val accountNumber: String = UUID.randomUUID().toString(),
     @CreationTimestamp(source = SourceType.DB)
-    val dateCreated: OffsetDateTime? = null,
+    val createdDate: OffsetDateTime? = null,
     @ManyToOne
     @JoinColumn(name = "client_id")
     val client: ClientEntity
@@ -21,6 +21,6 @@ data class AccountEntity(
     fun toModel(): Account = Account(
         accountNumber = accountNumber,
         clientNumber = client.clientNumber,
-        dateCreated = dateCreated!!
+        createdDate = createdDate!!
     )
 }

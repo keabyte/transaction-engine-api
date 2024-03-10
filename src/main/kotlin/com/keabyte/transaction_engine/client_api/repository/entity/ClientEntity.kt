@@ -5,7 +5,10 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.SourceType
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.util.*
 
 @Entity(name = "client")
@@ -14,7 +17,9 @@ data class ClientEntity(
     val clientNumber: String = UUID.randomUUID().toString(),
     val firstName: String,
     val lastName: String,
-    val dateOfBirth: LocalDate
+    val dateOfBirth: LocalDate,
+    @CreationTimestamp(source = SourceType.DB)
+    val createdDate: OffsetDateTime? = null,
 ) {
     fun toModel() = Client(
         clientNumber = clientNumber,
