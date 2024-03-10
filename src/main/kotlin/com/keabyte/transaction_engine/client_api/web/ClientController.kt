@@ -5,8 +5,10 @@ import com.keabyte.transaction_engine.client_api.web.model.client.Client
 import com.keabyte.transaction_engine.client_api.web.model.client.CreateClientRequest
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
+import io.swagger.v3.oas.annotations.tags.Tag
 import java.util.*
 
+@Tag(name = "Client")
 @Controller("/clients")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

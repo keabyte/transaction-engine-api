@@ -1,11 +1,12 @@
 # VM options: -Dmicronaut.environments=dev
 
 micronaut:
-  port: 8083
+  server:
+    port: 8100
 
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/txn-client-api
+    url: jdbc:postgresql://localhost:8101/txn-client-api
     username: postgres
     password: postgres
 
@@ -14,4 +15,8 @@ jpa:
     properties:
       hibernate:
         show_sql: true
+
+kafka:
+  bootstrap:
+    servers: localhost:8103
 

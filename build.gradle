@@ -1,16 +1,16 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.21"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.21"
-    id("org.jetbrains.kotlin.plugin.jpa") version "1.9.21"
-    id("com.google.devtools.ksp") version "1.9.21-1.0.16"
+    id("org.jetbrains.kotlin.jvm") version "1.9.22"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.22"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.9.22"
+    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.2.1"
-    id("io.micronaut.aot") version "4.2.1"
-    id("io.micronaut.test-resources") version "4.2.1"
+    id("io.micronaut.application") version "4.3.4"
+    id("io.micronaut.aot") version "4.3.4"
+    id("io.micronaut.test-resources") version '4.3.4'
 }
 
 version = "0.1"
-group = "com.keabyte.transaction_engine.client_api.entity"
+group = "com.keabyte.transaction_engine.client_api"
 
 repositories {
     mavenCentral()
@@ -23,14 +23,15 @@ dependencies {
     ksp("io.micronaut.serde:micronaut-serde-processor")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
     implementation("io.micronaut.validation:micronaut-validation")
+    implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut.liquibase:micronaut-liquibase")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-    implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("io.micronaut.kafka:micronaut-kafka")
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
@@ -38,9 +39,9 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
-    testImplementation 'org.assertj:assertj-core:3.25.2'
-    testImplementation 'io.micronaut.test:micronaut-test-rest-assured'
-    testImplementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    testImplementation("org.assertj:assertj-core")
+    testImplementation("io.micronaut.test:micronaut-test-rest-assured")
+    testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
 
 
@@ -58,7 +59,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.keabyte.transaction_engine.client_api.entity.*")
+        annotations("com.keabyte.transaction_engine.client_api.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
@@ -73,5 +74,12 @@ micronaut {
     }
 }
 
+tasks.named("dockerfile") {
+    baseImage("eclipse-temurin:21-jre-jammy")
+}
+
+tasks.named("dockerfileNative") {
+    jdkVersion = "21"
+}
 
 

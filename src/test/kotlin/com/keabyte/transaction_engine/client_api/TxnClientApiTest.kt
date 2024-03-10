@@ -1,5 +1,4 @@
 package com.keabyte.transaction_engine.client_api
-
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
@@ -7,7 +6,7 @@ import org.junit.jupiter.api.Test
 import jakarta.inject.Inject
 
 @MicronautTest
-class TransactionEngineApiTest {
+class TxnClientApiTest {
 
     @Inject
     lateinit var application: EmbeddedApplication<*>

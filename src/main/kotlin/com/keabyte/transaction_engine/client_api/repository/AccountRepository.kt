@@ -7,7 +7,7 @@ import java.util.*
 
 @Repository
 interface AccountRepository :
-    CrudRepository<com.keabyte.transaction_engine.client_api.repository.entity.AccountEntity, Long> {
+    CrudRepository<AccountEntity, Long> {
 
-    fun findByAccountNumber(accountNumber: String): Optional<com.keabyte.transaction_engine.client_api.repository.entity.AccountEntity>
+    fun findByAccountNumber(accountNumber: String): Optional<AccountEntity>
 }

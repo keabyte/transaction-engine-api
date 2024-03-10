@@ -9,15 +9,15 @@ import jakarta.validation.constraints.NotBlank
 
 @Singleton
 open class ClientService(
-    private val clientRepository: com.keabyte.transaction_engine.client_api.repository.ClientRepository,
+    private val clientRepository: ClientRepository,
 ) {
 
     open fun getClientById(@NotBlank clientNumber: String): Client {
         return clientRepository.findByClientNumber(clientNumber).map { it.toModel() }
-            .orElseThrow { com.keabyte.transaction_engine.client_api.exception.BusinessException("No client exists with client number $clientNumber") }
+            .orElseThrow { BusinessException("No client exists with client number $clientNumber") }
     }
 
     fun createClient(request: CreateClientRequest): Client {
-        return clientRepository.save(request.toEntity()).toModel()
+        return clientRepository.saveAndFlush(request.toEntity()).toModel()
     }
 }
