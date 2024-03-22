@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="table.event-message.1" author="taylar-keast">
+    <changeSet id="table.outbound_message.1" author="taylar-keast">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="outbound_message"/>
@@ -14,7 +14,7 @@
 
         <createTable tableName="outbound_message">
             <column name="id" type="varchar(255)">
-                <constraints primaryKey="true" unique="true" uniqueConstraintName="uk_outbound_event_id"/>
+                <constraints primaryKey="true" unique="true" uniqueConstraintName="uk_outbound_message_id"/>
             </column>
             <column name="created_date" type="timestamptz"/>
             <column name="topic" type="varchar">

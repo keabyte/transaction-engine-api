@@ -1,6 +1,5 @@
-package com.keabyte.transaction_engine.client_api.repository.entity
+package com.keabyte.transaction_engine.client_api.kafka
 
-import com.keabyte.transaction_engine.client_api.kafka.OutboundMessageStatus
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.Enumerated

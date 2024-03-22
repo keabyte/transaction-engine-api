@@ -1,7 +1,5 @@
-package com.keabyte.transaction_engine.client_api.repository
+package com.keabyte.transaction_engine.client_api.kafka
 
-import com.keabyte.transaction_engine.client_api.kafka.OutboundMessageStatus
-import com.keabyte.transaction_engine.client_api.repository.entity.OutboundMessage
 import io.micronaut.data.annotation.Repository
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.repository.CrudRepository

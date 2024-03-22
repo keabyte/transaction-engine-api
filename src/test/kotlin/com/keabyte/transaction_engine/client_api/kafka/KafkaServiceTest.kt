@@ -1,8 +1,6 @@
 package com.keabyte.transaction_engine.client_api.kafka
 
 import com.keabyte.transaction_engine.client_api.fixture.AccountFixture
-import com.keabyte.transaction_engine.client_api.repository.OutboundMessageRepository
-import com.keabyte.transaction_engine.client_api.repository.entity.OutboundMessage
 import io.micronaut.data.model.Pageable
 import io.micronaut.serde.ObjectMapper
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
