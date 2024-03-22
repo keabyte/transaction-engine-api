@@ -22,7 +22,7 @@
             <column name="first_name" type="varchar(255)"/>
             <column name="last_name" type="varchar(255)"/>
             <column name="date_of_birth" type="date"/>
-            <column name="created_date" type="timestamptz" defaultValueComputed="current_timestamp"/>
+            <column name="created_date" type="timestamptz"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
