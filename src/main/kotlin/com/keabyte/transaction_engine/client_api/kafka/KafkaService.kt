@@ -1,7 +1,7 @@
 package com.keabyte.transaction_engine.client_api.kafka
 
-import com.keabyte.transaction_engine.client_api.repository.EventMessageRepository
-import com.keabyte.transaction_engine.client_api.repository.entity.EventMessageEntity
+import com.keabyte.transaction_engine.client_api.repository.OutboundMessageRepository
+import com.keabyte.transaction_engine.client_api.repository.entity.OutboundMessage
 import io.micronaut.data.model.Pageable
 import io.micronaut.scheduling.annotation.Scheduled
 import io.micronaut.serde.ObjectMapper
@@ -15,43 +15,47 @@ import java.time.OffsetDateTime
 @Singleton
 open class KafkaService(
     private val objectMapper: ObjectMapper, private val kafkaProducer: KafkaProducer,
-    private val eventMessageRepository: EventMessageRepository,
+    private val outboundMessageRepository: OutboundMessageRepository,
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
     private val MAX_MESSAGE_AGE_DAYS = 1L
 
-    fun <T> saveMessage(topic: String, key: String, obj: T): EventMessageEntity {
+    fun <T> saveMessage(topic: String, key: String, obj: T): OutboundMessage {
         val data = objectMapper.writeValueAsString(obj)
-        val eventMessage = EventMessageEntity(
+        val message = OutboundMessage(
             data = data,
             key = key,
             topic = topic,
         )
 
-        return eventMessageRepository.save(eventMessage)
+        return outboundMessageRepository.save(message)
     }
 
     @Transactional
-    open fun sendMessage(eventMessage: EventMessageEntity) {
-        log.info("Publishing event message to topic '${eventMessage.topic}' with key '${eventMessage.key}' and message ${eventMessage.data}")
-        kafkaProducer.publish(eventMessage.topic, eventMessage.key, eventMessage.data)
-        eventMessage.status = EventMessageStatus.SENT
-        eventMessageRepository.update(eventMessage)
+    open fun sendMessage(message: OutboundMessage) {
+        log.info("Publishing event message to topic '${message.topic}' with key '${message.key}' and message ${message.data}")
+        kafkaProducer.publish(message.topic, message.key, message.data)
+        message.status = OutboundMessageStatus.SENT
+        outboundMessageRepository.update(message)
     }
 
     @Scheduled(fixedDelay = "10s", initialDelay = "10s")
-    @SchedulerLock(name = "KafkaService_publishPendingMessages")
-    open fun publishPendingMessages() {
-        val pendingMessages = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(
-            EventMessageStatus.PENDING,
+    @SchedulerLock(name = "KafkaService_publishPendingMessages", lockAtMostFor = "5m")
+    open fun publishPendingMessagesJob() {
+        publishPendingMessages()
+    }
+
+    fun publishPendingMessages() {
+        val pendingEvents = outboundMessageRepository.findAllByStatusOrderByCreatedDateAsc(
+            OutboundMessageStatus.PENDING,
             Pageable.from(0, 500)
         )
-        if (pendingMessages.isNotEmpty()) {
-            log.info("Event message publishing job found ${pendingMessages.size} pending message(s) to publish")
+        if (pendingEvents.isNotEmpty()) {
+            log.info("Event message publishing job found ${pendingEvents.size} pending message(s) to publish")
         }
 
-        pendingMessages.forEach {
+        pendingEvents.forEach {
             try {
                 sendMessage(it)
             } catch (e: Exception) {
@@ -61,9 +65,14 @@ open class KafkaService(
     }
 
     @Scheduled(fixedDelay = "10m", initialDelay = "10s")
+    @SchedulerLock(name = "KafkaService_deleteSentMessages", lockAtMostFor = "5m")
+    open fun deleteSentMessagesJob() {
+        deleteSentMessages()
+    }
+
     fun deleteSentMessages() {
-        val sentMessages = eventMessageRepository.findAllByStatusAndCreatedDateBeforeOrderByCreatedDateAsc(
-            EventMessageStatus.SENT,
+        val sentMessages = outboundMessageRepository.findAllByStatusAndCreatedDateBeforeOrderByCreatedDateAsc(
+            OutboundMessageStatus.SENT,
             OffsetDateTime.now().minusDays(MAX_MESSAGE_AGE_DAYS),
             Pageable.from(0, 500)
         )
@@ -72,6 +81,6 @@ open class KafkaService(
             log.info("Event message cleanup job found ${sentMessages.size} sent message(s) to delete")
         }
 
-        eventMessageRepository.deleteAll(sentMessages)
+        outboundMessageRepository.deleteAll(sentMessages)
     }
 }

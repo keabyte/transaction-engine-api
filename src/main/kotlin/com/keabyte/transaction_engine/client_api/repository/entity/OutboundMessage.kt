@@ -1,6 +1,6 @@
 package com.keabyte.transaction_engine.client_api.repository.entity
 
-import com.keabyte.transaction_engine.client_api.kafka.EventMessageStatus
+import com.keabyte.transaction_engine.client_api.kafka.OutboundMessageStatus
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.Enumerated
@@ -9,8 +9,8 @@ import org.hibernate.annotations.CreationTimestamp
 import java.time.OffsetDateTime
 import java.util.*
 
-@Entity(name = "event_message")
-data class EventMessageEntity(
+@Entity(name = "outbound_message")
+data class OutboundMessage(
     @Id val id: String = UUID.randomUUID().toString(),
     @CreationTimestamp
     val createdDate: OffsetDateTime? = null,
@@ -18,5 +18,5 @@ data class EventMessageEntity(
     val key: String,
     val data: String,
     @Enumerated(STRING)
-    var status: EventMessageStatus = EventMessageStatus.PENDING,
+    var status: OutboundMessageStatus = OutboundMessageStatus.PENDING,
 )
