@@ -2,7 +2,7 @@
 
 micronaut:
   server:
-    port: 8100
+    port: 8400
 
 datasources:
   default:

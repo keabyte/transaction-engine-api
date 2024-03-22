@@ -10,7 +10,7 @@ data class CreateClientRequest(
     val firstName: String,
     val lastName: String,
     @JsonFormat(pattern = "yyyy-MM-dd")
-    val dateOfBirth: LocalDate
+    val dateOfBirth: LocalDate,
 ) {
 
     fun toEntity() = ClientEntity(

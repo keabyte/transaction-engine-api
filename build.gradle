@@ -42,6 +42,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core")
     testImplementation("io.micronaut.test:micronaut-test-rest-assured")
     testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0")
 }
 
 
