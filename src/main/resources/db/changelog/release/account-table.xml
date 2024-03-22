@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="account-table.create.1" author="taylar-keast">
+    <changeSet id="table.account.1" author="taylar-keast">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="account"/>
@@ -14,14 +14,17 @@
 
         <createTable tableName="account">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true"/>
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="account_number" type="varchar(255)">
-                <constraints unique="true" uniqueConstraintName="uk_account_number"/>
+                <constraints unique="true" uniqueConstraintName="uk_account_number" nullable="false"/>
             </column>
-            <column name="created_date" type="timestamptz"/>
+            <column name="created_date" type="timestamptz">
+                <constraints nullable="false"/>
+            </column>
             <column name="client_id" type="int">
-                <constraints referencedColumnNames="id" referencedTableName="client" foreignKeyName="fk_client_id"/>
+                <constraints nullable="false" referencedColumnNames="id" referencedTableName="client"
+                             foreignKeyName="fk_client_id"/>
             </column>
         </createTable>
     </changeSet>

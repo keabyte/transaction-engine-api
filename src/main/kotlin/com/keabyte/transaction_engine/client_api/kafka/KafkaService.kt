@@ -7,6 +7,7 @@ import io.micronaut.scheduling.annotation.Scheduled
 import io.micronaut.serde.ObjectMapper
 import jakarta.inject.Singleton
 import jakarta.transaction.Transactional
+import net.javacrumbs.shedlock.micronaut.SchedulerLock
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.OffsetDateTime
@@ -40,7 +41,8 @@ open class KafkaService(
     }
 
     @Scheduled(fixedDelay = "10s", initialDelay = "10s")
-    fun publishPendingMessages() {
+    @SchedulerLock(name = "KafkaService_publishPendingMessages")
+    open fun publishPendingMessages() {
         val pendingMessages = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(
             EventMessageStatus.PENDING,
             Pageable.from(0, 500)

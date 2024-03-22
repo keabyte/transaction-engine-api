@@ -5,24 +5,24 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="table.client.1" author="taylar-keast">
+    <changeSet id="table.shedlock.1" author="taylar-keast">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="client"/>
+                <tableExists tableName="shedlock"/>
             </not>
         </preConditions>
 
-        <createTable tableName="client">
-            <column name="id" type="bigint" autoIncrement="true">
+        <createTable tableName="shedlock">
+            <column name="name" type="varchar(64)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="client_number" type="varchar(255)">
-                <constraints unique="false" uniqueConstraintName="uk_client_number"/>
+            <column name="lock_until" type="timestamp">
+                <constraints nullable="false"/>
             </column>
-            <column name="first_name" type="varchar(255)"/>
-            <column name="last_name" type="varchar(255)"/>
-            <column name="date_of_birth" type="date"/>
-            <column name="created_date" type="timestamptz">
+            <column name="locked_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locked_by" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

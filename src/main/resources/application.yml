@@ -31,3 +31,7 @@ kafka:
     topic:
       accounts:
         name: accounts
+
+shedlock:
+  defaults:
+    lock-at-most-for: 5m

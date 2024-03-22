@@ -32,6 +32,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     implementation("io.micronaut.kafka:micronaut-kafka")
+    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-micronaut:5.12.0")
+    implementation("net.javacrumbs.shedlock:shedlock-micronaut4:5.12.0")
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
