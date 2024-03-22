@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.validation.constraints.NotBlank
 import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -14,8 +15,8 @@ import java.util.*
 data class ClientEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null,
     val clientNumber: String = UUID.randomUUID().toString(),
-    val firstName: String,
-    val lastName: String,
+    @NotBlank val firstName: String,
+    @NotBlank val lastName: String,
     val dateOfBirth: LocalDate,
     @CreationTimestamp
     val createdDate: OffsetDateTime? = null,

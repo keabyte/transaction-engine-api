@@ -2,6 +2,7 @@ package com.keabyte.transaction_engine.client_api.web
 
 import com.keabyte.transaction_engine.client_api.exception.BusinessException
 import com.keabyte.transaction_engine.client_api.fixture.ClientFixture
+import com.keabyte.transaction_engine.client_api.web.model.client.CreateClientRequest
 import io.micronaut.http.MediaType
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.restassured.specification.RequestSpecification
@@ -27,6 +28,18 @@ class ClientControllerTest(private val clientController: ClientController) {
             .usingRecursiveComparison()
             .ignoringFields("clientNumber")
             .isEqualTo(request)
+    }
+
+    @Test
+    fun `create client with blank first name`() {
+        val request = CreateClientRequest(
+            firstName = "",
+            lastName = "Smith",
+            dateOfBirth = ClientFixture.createClientRequest_john().dateOfBirth
+        )
+        assertThatThrownBy { clientController.createClient(request) }
+            .isInstanceOf(ConstraintViolationException::class.java)
+            .hasMessageContaining("firstName")
     }
 
     @Test
