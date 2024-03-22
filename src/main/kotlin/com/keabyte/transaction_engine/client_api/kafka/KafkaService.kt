@@ -2,6 +2,7 @@ package com.keabyte.transaction_engine.client_api.kafka
 
 import com.keabyte.transaction_engine.client_api.repository.EventMessageRepository
 import com.keabyte.transaction_engine.client_api.repository.entity.EventMessageEntity
+import io.micronaut.data.model.Pageable
 import io.micronaut.scheduling.annotation.Scheduled
 import io.micronaut.serde.ObjectMapper
 import jakarta.inject.Singleton
@@ -40,7 +41,10 @@ open class KafkaService(
 
     @Scheduled(fixedDelay = "10s", initialDelay = "10s")
     fun publishPendingMessages() {
-        val pendingMessages = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.PENDING)
+        val pendingMessages = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(
+            EventMessageStatus.PENDING,
+            Pageable.from(0, 500)
+        )
         if (pendingMessages.isNotEmpty()) {
             log.info("Event message publishing job found ${pendingMessages.size} pending message(s) to publish")
         }
@@ -58,7 +62,8 @@ open class KafkaService(
     fun deleteSentMessages() {
         val sentMessages = eventMessageRepository.findAllByStatusAndCreatedDateBeforeOrderByCreatedDateAsc(
             EventMessageStatus.SENT,
-            OffsetDateTime.now().minusDays(MAX_MESSAGE_AGE_DAYS)
+            OffsetDateTime.now().minusDays(MAX_MESSAGE_AGE_DAYS),
+            Pageable.from(0, 500)
         )
 
         if (sentMessages.isNotEmpty()) {

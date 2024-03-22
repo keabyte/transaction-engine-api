@@ -3,6 +3,7 @@ package com.keabyte.transaction_engine.client_api.kafka
 import com.keabyte.transaction_engine.client_api.fixture.AccountFixture
 import com.keabyte.transaction_engine.client_api.repository.EventMessageRepository
 import com.keabyte.transaction_engine.client_api.repository.entity.EventMessageEntity
+import io.micronaut.data.model.Pageable
 import io.micronaut.serde.ObjectMapper
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.persistence.EntityManager
@@ -41,12 +42,18 @@ class KafkaServiceTest(
         val result = kafkaService.saveMessage(
             "test-topic", UUID.randomUUID().toString(), account
         )
-        val preCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.PENDING).size
+        val preCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(
+            EventMessageStatus.PENDING,
+            Pageable.UNPAGED
+        ).size
         assertThat(preCount).isGreaterThan(0)
 
         kafkaService.publishPendingMessages()
 
-        val postCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.PENDING).size
+        val postCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(
+            EventMessageStatus.PENDING,
+            Pageable.UNPAGED
+        ).size
         assertThat(postCount).isEqualTo(0)
     }
 
@@ -65,12 +72,14 @@ class KafkaServiceTest(
             .setParameter("id", message.id)
             .executeUpdate()
 
-        val preCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT).size
+        val preCount =
+            eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT, Pageable.UNPAGED).size
         assertThat(preCount).isEqualTo(1)
 
         kafkaService.deleteSentMessages()
 
-        val postCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT).size
+        val postCount =
+            eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT, Pageable.UNPAGED).size
         assertThat(postCount).isEqualTo(0)
     }
 
@@ -85,12 +94,14 @@ class KafkaServiceTest(
             )
         )
 
-        val preCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT).size
+        val preCount =
+            eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT, Pageable.UNPAGED).size
         assertThat(preCount).isEqualTo(1)
 
         kafkaService.deleteSentMessages()
 
-        val postCount = eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT).size
+        val postCount =
+            eventMessageRepository.findAllByStatusOrderByCreatedDateAsc(EventMessageStatus.SENT, Pageable.UNPAGED).size
         assertThat(postCount).isEqualTo(1)
     }
 }
