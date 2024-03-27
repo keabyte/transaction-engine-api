@@ -4,6 +4,9 @@ import com.keabyte.transaction_engine.client_api.exception.BusinessException
 import com.keabyte.transaction_engine.client_api.repository.ClientRepository
 import com.keabyte.transaction_engine.client_api.web.model.client.Client
 import com.keabyte.transaction_engine.client_api.web.model.client.CreateClientRequest
+import io.micronaut.data.model.Page
+import io.micronaut.data.model.Pageable
+import io.micronaut.data.model.Sort
 import jakarta.inject.Singleton
 import jakarta.validation.constraints.NotBlank
 
@@ -18,6 +21,11 @@ open class ClientService(
     }
 
     fun createClient(request: CreateClientRequest): Client {
-        return clientRepository.saveAndFlush(request.toEntity()).toModel()
+        return clientRepository.save(request.toEntity()).toModel()
+    }
+
+    fun getClients(): Page<Client> {
+        return clientRepository.findAll(Pageable.from(0, 10, Sort.of(Sort.Order.desc("createdDate"))))
+            .map { it.toModel() }
     }
 }

@@ -1,5 +1,6 @@
 package com.keabyte.transaction_engine.client_api.repository.entity
 
+import com.keabyte.transaction_engine.client_api.type.AccountType
 import com.keabyte.transaction_engine.client_api.web.model.account.Account
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
@@ -14,12 +15,15 @@ data class AccountEntity(
     val createdDate: OffsetDateTime? = null,
     @ManyToOne
     @JoinColumn(name = "client_id")
-    val client: ClientEntity
+    val client: ClientEntity,
+    @Enumerated(EnumType.STRING)
+    val type: AccountType
 ) {
 
     fun toModel(): Account = Account(
         accountNumber = accountNumber,
         clientNumber = client.clientNumber,
-        createdDate = createdDate!!
+        createdDate = createdDate!!,
+        type = type
     )
 }

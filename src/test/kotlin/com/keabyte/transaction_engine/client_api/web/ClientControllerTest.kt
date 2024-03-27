@@ -88,4 +88,14 @@ class ClientControllerTest(private val clientController: ClientController) {
             .isInstanceOf(ConstraintViolationException::class.java)
             .hasMessageContaining("must not be blank")
     }
+
+    @Test
+    fun `get clients`() {
+        clientController.createClient(ClientFixture.createClientRequest_jane())
+        clientController.createClient(ClientFixture.createClientRequest_john())
+
+        val clients = clientController.getClients()
+
+        assertThat(clients).hasSize(2)
+    }
 }

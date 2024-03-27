@@ -19,7 +19,7 @@ class AccountController(private val accountService: AccountService) {
     }
 
     @Post
-    fun createAccount(request: CreateAccountRequest): Account {
+    fun createAccount(@Body request: CreateAccountRequest): Account {
         return accountService.createAccount(request).toModel()
     }
 }

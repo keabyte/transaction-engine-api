@@ -3,6 +3,7 @@ package com.keabyte.transaction_engine.client_api.web
 import com.keabyte.transaction_engine.client_api.service.ClientService
 import com.keabyte.transaction_engine.client_api.web.model.client.Client
 import com.keabyte.transaction_engine.client_api.web.model.client.CreateClientRequest
+import io.micronaut.data.model.Page
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -19,6 +20,11 @@ class ClientController(
     @Get("/{clientNumber}")
     fun getClientById(clientNumber: String): Client {
         return clientService.getClientById(clientNumber)
+    }
+
+    @Get
+    fun getClients(): Page<Client> {
+        return clientService.getClients()
     }
 
     @Post

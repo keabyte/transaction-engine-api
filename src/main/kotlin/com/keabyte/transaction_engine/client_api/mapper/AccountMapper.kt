@@ -12,6 +12,7 @@ class AccountMapper(private val clientRepository: ClientRepository) {
     fun mapCreateAccountRequestToAccountEntity(request: CreateAccountRequest) =
         AccountEntity(
             client = clientRepository.findByClientNumber(request.clientNumber)
-                .orElseThrow { BusinessException("No client exists with client number ${request.clientNumber}") }
+                .orElseThrow { BusinessException("No client exists with client number ${request.clientNumber}") },
+            type = request.type
         )
 }
